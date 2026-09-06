@@ -42,7 +42,14 @@ const check = (cond, msg) => {
   await page.fill("#name-input", "J. Alvarez");
   await page.click("#btn-begin");
   await page.waitForTimeout(300);
-  check(await page.locator("#screen-memo.active").count() === 1, "memo screen after begin");
+  check(await page.locator("#screen-intro.active").count() === 1, "intro letter after begin");
+  const letter = await page.locator("#screen-intro").textContent();
+  check(letter.includes("J. Alvarez"), "letter addressed to player by name");
+  check(letter.includes("MAIL SCREENING DIVISION"), "assignment story present");
+  await page.screenshot({ path: SHOTS + "/01b-intro.png" });
+  await page.click("#screen-intro .big-btn");
+  await page.waitForTimeout(300);
+  check(await page.locator("#screen-memo.active").count() === 1, "memo screen after intro");
   check((await page.locator(".memo-proto-list li").count()) === 4, "day 1 protocols rendered");
   await page.screenshot({ path: SHOTS + "/02-memo.png" });
 

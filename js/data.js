@@ -977,6 +977,35 @@ IP.VENDORS = [
   { dom: "brightpath-wellness.co", note: "BrightPath — wellness program partner" }
 ];
 
+/* ---------- intro assignment letter (shown once, after name entry) ---------- */
+IP.INTRO = {
+  motto: "COVERAGE YOU CAN TRUST",
+  address: "1200 Commerce Plaza, Suite 400 · Columbus, OH 43215",
+  form: "FORM MBG-8821-C — NOTICE OF ASSIGNMENT (REVIEW PERIOD)",
+  date: "EFFECTIVE MONDAY, OCTOBER 6",
+  meta: [
+    "TO: {{name}} — Claims Department",
+    "FROM: Office of the Chief Operating Officer",
+    "CC: D. Okafor, Director of IT Security · Human Resources · Internal Audit"
+  ],
+  paragraphs: [
+    "Dear {{name}},",
+    "Effective Monday, October 6, you are assigned to the MAIL SCREENING DIVISION for a review period of six business days.",
+    "You may reasonably ask what the Mail Screening Division is. Until last quarter it was nothing — a line item in a risk memo nobody read. Then, in the space of nine weeks:",
+    { li: true, text: "A broker payment was redirected to a fraudulent account after a convincing 'we've changed banks' email." },
+    { li: true, text: "A claims coordinator's password was harvested by a login page that looked exactly like ours." },
+    { li: true, text: "A retirement-benefits announcement opened a back door that took IT eleven hours to close." },
+    "No single person caused any of this. Modern phishing is an industry, and it had simply gotten better than our filters. The Board's conclusion: the last filter worth trusting is a well-trained human. That is now you.",
+    "Every message bound for the claims inbox will cross your desk first. DELIVER the legitimate. REPORT the malicious. You will have real tools, real protocols, and an end-of-shift debrief that shows exactly what you caught and what slipped past. What you will not have is blame — this is a simulator. Every attack you meet this week has already been used against companies like ours. Meeting them here first is the safest training there is.",
+    "Your week will be reviewed with you at its end — not to measure your worth, but to sharpen your radar.",
+    "Report to Station 4, Claims Floor, Monday 07:30. The coffee is terrible. The work matters."
+  ],
+  signer: "M. Ellison",
+  signerTitle: "Chief Operating Officer — Meridian Benefits Group",
+  footnote: "Form MBG-8821-C · rev 10/2026 · This letter was drafted by a human, reviewed by two more, and contains no links. The first lesson is free.",
+  button: "REPORT FOR DUTY — MONDAY 07:30"
+};
+
 IP.QR_ART = [
   "▄▄▄▄▄▄▄  ▄▄ ▄▄▄▄▄▄▄",
   "█  █ █ ███ █  █ ███",

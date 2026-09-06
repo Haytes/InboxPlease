@@ -93,7 +93,7 @@ IP.ui = (function () {
       const name = $("name-input").value.trim();
       if (!name) { toast("Enter a screener name to begin."); $("name-input").focus(); return; }
       E.startCampaign(name);
-      renderMemo();
+      renderIntro();
     });
     $("btn-resume").addEventListener("click", function () {
       if (E.load()) {
@@ -107,6 +107,54 @@ IP.ui = (function () {
     $("name-input").addEventListener("keydown", function (e) {
       if (e.key === "Enter") $("btn-begin").click();
     });
+  }
+
+  /* ---------- intro assignment letter ---------- */
+
+  function renderIntro() {
+    const L = IP.INTRO;
+    const scr = $("screen-intro");
+    clear(scr);
+
+    const sheet = el("div", "intro-letter");
+
+    const head = el("div", "intro-head");
+    head.appendChild(el("div", "intro-co", "MERIDIAN BENEFITS GROUP"));
+    head.appendChild(el("div", "intro-motto", L.motto));
+    head.appendChild(el("div", "intro-addr", L.address));
+    sheet.appendChild(head);
+
+    sheet.appendChild(el("div", "intro-form", L.form + "   ·   " + L.date));
+
+    const meta = el("div", "intro-meta");
+    L.meta.forEach(function (line) {
+      meta.appendChild(el("div", null, null)).appendChild(txt(line));
+    });
+    sheet.appendChild(meta);
+
+    L.paragraphs.forEach(function (p) {
+      if (p && p.li) {
+        sheet.appendChild(el("div", "intro-li", null)).appendChild(txt(p.text));
+      } else {
+        sheet.appendChild(el("p", "intro-p", null)).appendChild(txt(p));
+      }
+    });
+
+    const sig = el("div", "intro-sig");
+    sig.appendChild(el("div", "intro-sig-name", L.signer));
+    sig.appendChild(el("div", "intro-sig-title", L.signerTitle));
+    sheet.appendChild(sig);
+
+    sheet.appendChild(el("div", "intro-foot", L.footnote));
+
+    sheet.appendChild(el("div", "intro-stamp", "ASSIGNED — MAIL SCREENING DIV."));
+
+    const btn = el("button", "big-btn ok-btn", L.button);
+    btn.addEventListener("click", function () { renderMemo(); });
+    sheet.appendChild(btn);
+
+    scr.appendChild(sheet);
+    showScreen("intro");
   }
 
   /* ---------- memo ---------- */
@@ -884,6 +932,7 @@ IP.ui = (function () {
   return {
     showScreen: showScreen,
     renderTitle: renderTitle,
+    renderIntro: renderIntro,
     renderMemo: renderMemo,
     renderTriage: renderTriage,
     renderDebrief: renderDebrief,

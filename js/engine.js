@@ -212,7 +212,7 @@ IP.engine = (function () {
     state.current = null;
     state.startedAt = Date.now();
     state.completedAt = null;
-    state.screen = "memo";
+    state.screen = "intro";
     enterDay();
     save();
   }

@@ -69,6 +69,108 @@
   color: var(--ink-dim);
 }
 
+/* ---------- intro assignment letter ---------- */
+#screen-intro{
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+}
+.intro-letter{
+  position: relative;
+  width: 720px;
+  max-width: 94vw;
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
+  background: var(--panel);
+  border: 3px solid var(--olive-dark);
+  box-shadow: 8px 8px 0 rgba(0,0,0,.4);
+  padding: 32px 44px 26px;
+}
+.intro-head{
+  text-align: center;
+  border-bottom: 3px double var(--ink);
+  padding-bottom: 12px;
+}
+.intro-co{
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+.intro-motto{
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--ink-dim);
+  margin-top: 4px;
+}
+.intro-addr{
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink-dim);
+  margin-top: 6px;
+}
+.intro-form{
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--alert-dark);
+  text-align: center;
+  margin: 12px 0 10px;
+}
+.intro-meta{
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.7;
+  border: 1px solid var(--line);
+  background: var(--paper-dark);
+  padding: 8px 12px;
+  margin-bottom: 14px;
+}
+.intro-p{ font-size: 14.5px; margin-bottom: 12px; }
+.intro-li{
+  font-size: 13.5px;
+  margin: 0 0 8px 16px;
+  border-left: 3px solid var(--line);
+  padding: 2px 0 2px 10px;
+}
+.intro-sig{ margin: 16px 0 4px; }
+.intro-sig-name{
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 16px;
+}
+.intro-sig-title{
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--ink-dim);
+}
+.intro-foot{
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink-dim);
+  border-top: 1px dashed var(--line);
+  margin-top: 14px;
+  padding-top: 8px;
+}
+.intro-stamp{
+  position: absolute;
+  bottom: 190px;
+  right: 44px;
+  transform: rotate(-6deg);
+  border: 3px double var(--alert-dark);
+  color: var(--alert-dark);
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 8px 12px;
+  background: rgba(226,221,205,.55);
+  pointer-events: none;
+}
+.intro-letter .big-btn{ margin-top: 16px; }
+
 /* ---------- memo ---------- */
 #screen-memo{
   align-items: center;
