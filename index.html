@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A Papers, Please-style phishing awareness training game. Screen the claims inbox, spot the red flags, deliver the legitimate, report the phish.">
+<meta name="theme-color" content="#2c2f25">
+<title>INBOX, PLEASE — Phishing Awareness Training</title>
+<!-- social preview (Slack / Teams / Twitter link cards) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="INBOX, PLEASE — Phishing Awareness Training">
+<meta property="og:description" content="Six shifts. Thirty-one emails. Every judgment sharpens your radar. Mistakes in the simulator are free.">
+<meta property="og:image" content="/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%235f6650'/%3E%3Cpath d='M6 10h20v13H6z' fill='%23cfc9b8'/%3E%3Cpath d='M6 10l10 8 10-8' stroke='%233e4234' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/client.css">
+<link rel="stylesheet" href="css/screens.css">
+<link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+<div id="scanlines" aria-hidden="true"></div>
+
+<header id="topbar" hidden>
+  <div class="tb-title">INBOX, PLEASE</div>
+  <div class="tb-day" id="tb-day">DAY 1/6</div>
+  <div class="tb-trust">
+    <span class="tb-label">SECURITY TRUST</span>
+    <div class="meter"><div id="trust-fill"></div></div>
+    <span id="trust-num">70</span>
+  </div>
+  <div class="tb-buttons">
+    <button id="btn-rules" class="tb-btn" title="Review today's memo">RULES</button>
+    <button id="btn-mute" class="tb-btn" title="Toggle sound (M)">SOUND ON</button>
+    <button id="btn-crt" class="tb-btn" title="Toggle CRT scanlines">CRT</button>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- ============ TITLE ============ -->
+  <section id="screen-title" class="screen">
+    <div class="title-card">
+      <div class="title-logo">
+        <span class="title-mail">&#9993;</span>
+        <h1>INBOX, PLEASE</h1>
+      </div>
+      <p class="title-sub">MERIDIAN BENEFITS GROUP &mdash; MAIL SCREENING DIVISION</p>
+      <p class="title-blurb">Six shifts. Thirty-one emails. Every judgment sharpens your radar.<br>
+      Deliver the legitimate. Report the phish. Mistakes here are free &mdash; that is the whole point of a simulator.</p>
+      <div class="title-form">
+        <label for="name-input">SCREENER NAME</label>
+        <input id="name-input" type="text" maxlength="24" placeholder="e.g. J. Alvarez" autocomplete="off">
+        <button id="btn-begin" class="big-btn ok-btn">BEGIN SHIFT</button>
+        <button id="btn-resume" class="big-btn" hidden>RESUME SHIFT</button>
+      </div>
+      <p class="title-hint">Keys: <b>A</b> allow &middot; <b>P</b> report phishing &middot; <b>H</b> full headers &middot; hover links to inspect &middot; <b>M</b> mute</p>
+    </div>
+  </section>
+
+  <!-- ============ MEMO ============ -->
+  <section id="screen-memo" class="screen"></section>
+
+  <!-- ============ TRIAGE (the mail client) ============ -->
+  <section id="screen-triage" class="screen">
+    <div class="client">
+      <aside class="sidebar">
+        <div class="side-block">
+          <h3>CLAIMS MAILBOX</h3>
+          <ul class="folder-list">
+            <li class="active">&#9656; Inbox</li>
+            <li>Sent</li>
+            <li>Drafts</li>
+            <li>Archive</li>
+          </ul>
+        </div>
+        <div class="side-block">
+          <h3>QUEUE</h3>
+          <div id="queue-count" class="queue-count"></div>
+        </div>
+        <div class="side-block protocols-block">
+          <h3>PROTOCOLS</h3>
+          <ol id="side-protocols" class="proto-list"></ol>
+        </div>
+        <div class="side-block" id="side-vendors" hidden>
+          <h3>APPROVED SENDERS</h3>
+          <ul id="vendor-list" class="vendor-list"></ul>
+        </div>
+      </aside>
+
+      <div class="list-pane">
+        <div class="list-head">INBOX <span id="list-date"></span></div>
+        <ul id="msg-list"></ul>
+      </div>
+
+      <div class="read-pane">
+        <div class="read-scroll">
+          <div class="mail-head">
+            <h2 id="m-subject"></h2>
+            <div class="m-from"><span id="m-fromname"></span>&ensp;<span id="m-fromaddr"></span></div>
+            <div class="m-meta"><span>To: claims@meridianbenefits.com</span><span id="m-time"></span></div>
+            <button id="btn-headers" class="linkish" type="button">&#9662; FULL HEADERS</button>
+          </div>
+          <div id="header-panel" class="header-panel" hidden></div>
+          <div id="mail-body" class="mail-body"></div>
+          <div id="attachments" class="attachments"></div>
+        </div>
+        <div class="status-bar">
+          <span class="sb-label">LINK</span>
+          <span id="sb-url">hover a link to inspect its true address</span>
+          <div id="sb-domain" class="sb-domain"></div>
+        </div>
+        <div id="stamp-layer"></div>
+      </div>
+    </div>
+
+    <div class="verdict-bar">
+      <button id="btn-allow" class="verdict-btn allow-btn" type="button">
+        <span class="vb-key">A</span> ALLOW
+        <span class="vb-sub">deliver to inbox</span>
+      </button>
+      <div class="verdict-mid">
+        <div id="verdict-msg"></div>
+        <div class="vb-hints">A allow &middot; P report &middot; H headers &middot; hover links &amp; attachments to inspect &middot; M mute</div>
+      </div>
+      <button id="btn-report" class="verdict-btn report-btn" type="button">
+        <span class="vb-key">P</span> REPORT PHISHING
+        <span class="vb-sub">quarantine &amp; notify IT</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ INCIDENT ============ -->
+  <section id="screen-incident" class="screen"></section>
+
+  <!-- ============ DEBRIEF ============ -->
+  <section id="screen-debrief" class="screen"></section>
+
+  <!-- ============ FINAL ============ -->
+  <section id="screen-final" class="screen"></section>
+
+</main>
+
+<noscript><p style="padding:2rem">This training requires JavaScript.</p></noscript>
+
+<script src="js/data.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>
